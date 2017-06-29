@@ -1,0 +1,129 @@
+{
+    "memo": "4cf52652a5975b85c243a843fccb19e0763fd1b51dd977f451a99346876b4e5f",
+    "projects": [
+        {
+            "name": "github.com/Sirupsen/logrus",
+            "branch": "master",
+            "revision": "0208149b40d863d2c1a2f8fe5753096a9cf2cc8b",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/boltdb/bolt",
+            "branch": "master",
+            "revision": "e9cf4fae01b5a8ff89d0ec6b32f0d9c9f79aefdd",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/caarlos0/env",
+            "branch": "master",
+            "revision": "0cf029d5748c52beb2c9d20c81880cb4bdf8f788",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/dgrijalva/jwt-go",
+            "branch": "master",
+            "revision": "a539ee1a749a2b895533f979515ac7e6e0f5b650",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/labstack/echo",
+            "branch": "master",
+            "revision": "7834248244eacccbd6853a9cf98d072403446865",
+            "packages": [
+                ".",
+                "middleware"
+            ]
+        },
+        {
+            "name": "github.com/labstack/gommon",
+            "branch": "master",
+            "revision": "1121fd3e243c202482226a7afe4dcd07ffc4139a",
+            "packages": [
+                "bytes",
+                "color",
+                "log",
+                "random"
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-colorable",
+            "branch": "master",
+            "revision": "ded68f7a9561c023e790de24279db7ebf473ea80",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mattn/go-isatty",
+            "branch": "master",
+            "revision": "fc9e8d8ef48496124e79ae0df75490096eccf6fe",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/pkg/errors",
+            "branch": "master",
+            "revision": "c605e284fe17294bda444b34710735b29d1a9d90",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/satori/go.uuid",
+            "branch": "master",
+            "revision": "5bf94b69c6b68ee1b541973bb8e1144db23a194b",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/valyala/bytebufferpool",
+            "branch": "master",
+            "revision": "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/valyala/fasttemplate",
+            "branch": "master",
+            "revision": "dcecefd839c4193db0d35b88ec65b4c12d360ab0",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "golang.org/x/crypto",
+            "branch": "master",
+            "revision": "e7ba82683099cae71475961448ab8f903ea77c26",
+            "packages": [
+                "acme/autocert"
+            ]
+        },
+        {
+            "name": "golang.org/x/sys",
+            "branch": "master",
+            "revision": "90796e5a05ce440b41c768bd9af257005e470461",
+            "packages": [
+                "unix"
+            ]
+        },
+        {
+            "name": "gopkg.in/robfig/cron.v2",
+            "branch": "v2",
+            "revision": "be2e0b0deed5a68ffee390b4583a13aff8321535",
+            "packages": [
+                "."
+            ]
+        }
+    ]
+}

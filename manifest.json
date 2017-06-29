@@ -1,0 +1,25 @@
+{
+    "dependencies": {
+        "github.com/Sirupsen/logrus": {
+            "branch": "master"
+        },
+        "github.com/boltdb/bolt": {
+            "branch": "master"
+        },
+        "github.com/caarlos0/env": {
+            "branch": "master"
+        },
+        "github.com/labstack/echo": {
+            "branch": "master"
+        },
+        "github.com/pkg/errors": {
+            "branch": "master"
+        },
+        "github.com/satori/go.uuid": {
+            "branch": "master"
+        },
+        "gopkg.in/robfig/cron.v2": {
+            "branch": "v2"
+        }
+    }
+}
