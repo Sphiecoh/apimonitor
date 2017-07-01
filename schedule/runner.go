@@ -15,10 +15,11 @@ import (
 
 //Scheduler mantains the jobs and crons
 type Scheduler struct {
-	Cron   *cron.Cron
-	Jobs   []*RunnerJob
-	Store  *db.Store
-	Config *conf.Config
+	Cron    *cron.Cron
+	Jobs    []*RunnerJob
+	Store   *db.Store
+	Config  *conf.Config
+	Entries map[string]cron.EntryID
 }
 
 //RunnerJob  represents the job to run by cron
@@ -53,10 +54,11 @@ func New(tests []*db.ApiTest, store *db.Store, conf *conf.Config) *Scheduler {
 		logrus.Infof("Scheduling test %s", test.Name)
 	}
 	s := &Scheduler{
-		Cron:   cron.New(),
-		Jobs:   jobs,
-		Store:  store,
-		Config: conf,
+		Cron:    cron.New(),
+		Jobs:    jobs,
+		Store:   store,
+		Config:  conf,
+		Entries: make(map[string]cron.EntryID),
 	}
 	return s
 }
@@ -68,7 +70,8 @@ func (s *Scheduler) Start() error {
 		if err != nil {
 			return errors.Wrapf(err, "Invalid cron %v for test %v", job.target.Cron, job.target.Name)
 		}
-		s.Cron.Schedule(schedule, job)
+		id := s.Cron.Schedule(schedule, job)
+		s.Entries[job.target.ID] = id
 	}
 	s.Cron.Start()
 	logrus.Info("Started job scheduler")

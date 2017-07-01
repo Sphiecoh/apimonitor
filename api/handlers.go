@@ -66,6 +66,8 @@ func (h *Handler) DeleteTest(c echo.Context) error {
 	if err := h.Store.DeleteTest(id); err != nil {
 		return err
 	}
+	eid := h.S.Entries[id]
+	h.S.Cron.Remove(eid)
 	c.JSON(200, nil)
 	return nil
 
