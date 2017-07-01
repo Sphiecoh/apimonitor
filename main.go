@@ -31,6 +31,7 @@ func main() {
 	flag.StringVar(&config.ConfigPath, "conf", "", "Dir with tests")
 	flag.Parse()
 	err := env.Parse(&config)
+
 	if err != nil {
 		logrus.Error(err)
 	}

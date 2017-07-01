@@ -1,3 +1,4 @@
+// @SubApi Test API [/]
 package api
 
 import (
@@ -42,6 +43,12 @@ func (h *Handler) CreateTest(c echo.Context) error {
 	return c.JSON(http.StatusCreated, nil)
 }
 
+// @Title GetAllTests
+// @Description get all tests
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} []db.ApiTest
+// @Router / [get]
 func (h *Handler) GetAllTests(c echo.Context) error {
 
 	result, err := h.Store.GetAllTests()
