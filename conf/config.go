@@ -7,4 +7,5 @@ type Config struct {
 	SlackChannel string `env:"APIMON_SLACK_CHANNEL"`
 	SlackUser    string `env:"APIMON_SLACK_USER"`
 	SlackURL     string `env:"APIMON_SLACK_URL"`
+	ConfigPath   string `json:"config_path,omitempty"`
 }

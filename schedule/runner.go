@@ -3,6 +3,8 @@ package schedule
 import (
 	"time"
 
+	"fmt"
+
 	"github.com/Sirupsen/logrus"
 	"github.com/pkg/errors"
 	"github.com/sphiecoh/apimonitor/conf"
@@ -75,15 +77,18 @@ func (s *Scheduler) Start() error {
 
 //Run runs the cron job
 func (job RunnerJob) Run() {
+	var logger = logrus.WithField("name", job.target.Name)
+	logger.Infof("Running test %s", job.target.Name)
 	result := job.target.Run()
+	logger.WithField("status", result.Status)
 	if err := job.db.SaveResult(result); err != nil {
-		logrus.WithField("test", job.target.Name).Errorf("failed to save result %v", err)
+		logger.Errorf("failed to save result %v", err)
 	}
 
 	if result.Status != 200 {
-		logrus.WithField("test", job.target.Name).Errorf("Test failed %v", result.Status)
-		notification.NotifySlack(result.Error, "Test failed", job.Config)
+		logger.Errorf("Test %s failed", job.target.Name)
+		notification.NotifySlack(result.Error, fmt.Sprintf("Test %s failed", job.target.Name), job.Config)
 		return
 	}
-	logrus.WithField("test", job.target.Name).Infof("Test succeeded ,status %v", result.Status)
+	logger.Infof("Test %s succeeded", job.target.Name)
 }

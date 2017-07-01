@@ -339,7 +339,7 @@ build: deps
 	go build \
 	-tags ${STATIC_TAG} \
 	-ldflags '-linkmode external -extldflags ${STATIC_FLAG} -w -s -X main.ProgramVersion=${VERSION} -X main.ProgramRelease=${RELEASE}' \
-	-o ./target/${BINPATH}$(PROJECT) ./src
+	-o ./target/${BINPATH}$(PROJECT) ./
 ifneq (${UPXENABLED},)
 	upx --brute ./target/${BINPATH}$(PROJECT)
 endif

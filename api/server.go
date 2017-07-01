@@ -14,6 +14,7 @@ type Server struct {
 	H Handler
 }
 
+//Start starts the webserver
 func (srv *Server) Start() {
 	server := echo.New()
 	server.Server.ReadTimeout = time.Second * 5
@@ -22,7 +23,7 @@ func (srv *Server) Start() {
 	server.Use(mid.Recover())
 	server.POST("/", srv.H.CreateTest)
 	server.GET("/", srv.H.GetAllTests)
-	server.GET("/:id", srv.H.GetTestResult)
+	server.GET("/:id/results", srv.H.GetTestResult)
 	server.DELETE("/:id", srv.H.DeleteTest)
 	logrus.Fatal(server.Start(srv.C.Port))
 }
