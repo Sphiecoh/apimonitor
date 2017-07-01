@@ -28,7 +28,7 @@ func main() {
 	flag.StringVar(&config.SlackURL, "SlackUrl", "https://hooks.slack.com/services/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", "Slack WebHook Url")
 	flag.StringVar(&config.SlackChannel, "SlackChannel", "#general", "Slack channel")
 	flag.StringVar(&config.SlackUser, "slackuser", "user", "Slack username")
-	flag.StringVar(&config.ConfigPath, "conf", "./tests", "Dir with tests")
+	flag.StringVar(&config.ConfigPath, "conf", "", "Dir with tests")
 	flag.Parse()
 	err := env.Parse(&config)
 	if err != nil {
