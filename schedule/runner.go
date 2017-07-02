@@ -51,7 +51,6 @@ func New(tests []*db.ApiTest, store *db.Store, conf *conf.Config) *Scheduler {
 			Config: conf,
 		}
 		jobs = append(jobs, job)
-		logrus.Infof("Scheduling test %s", test.Name)
 	}
 	s := &Scheduler{
 		Cron:    cron.New(),
@@ -71,6 +70,7 @@ func (s *Scheduler) Start() error {
 			return errors.Wrapf(err, "Invalid cron %v for test %v", job.target.Cron, job.target.Name)
 		}
 		id := s.Cron.Schedule(schedule, job)
+		logrus.Infof("Scheduled [%s]", job.target.Name)
 		s.Entries[job.target.ID] = id
 	}
 	s.Cron.Start()
@@ -81,7 +81,7 @@ func (s *Scheduler) Start() error {
 //Run runs the cron job
 func (job RunnerJob) Run() {
 	var logger = logrus.WithField("name", job.target.Name)
-	logger.Infof("Running test %s", job.target.Name)
+	logger.Infof("Running test [%s (%s)]", job.target.Name, job.target.URL)
 	result := job.target.Run()
 	logger.WithField("status", result.Status)
 	if err := job.db.SaveResult(result); err != nil {
@@ -90,8 +90,8 @@ func (job RunnerJob) Run() {
 
 	if result.Status != 200 {
 		logger.Errorf("Test %s failed", job.target.Name)
-		notification.NotifySlack(result.Error, fmt.Sprintf("Test %s failed", job.target.Name), job.Config)
+		notification.NotifySlack(result.Error, fmt.Sprintf("Test [%s (%s)] failed", job.target.Name, job.target.URL), job.Config)
 		return
 	}
-	logger.Infof("Test %s succeeded", job.target.Name)
+	logger.Infof("Test [%s (%s)] succeeded", job.target.Name, job.target.URL)
 }

@@ -27,27 +27,32 @@ func (srv *Server) Start() {
 	server := echo.New()
 	post := endpoint.New("post", "/tests", "Add a new test to the store",
 		endpoint.Handler(srv.H.CreateTest),
+		endpoint.OperationID("CreateTest"),
 		endpoint.Description("Additional information on adding a pet to the store"),
 		endpoint.Body(db.ApiTest{}, "Test object that needs to be added", true),
 		endpoint.Response(http.StatusCreated, db.ApiTest{}, "Successfully added test"),
 	)
 	getall := endpoint.New("get", "/tests", "Find all tests",
 		endpoint.Handler(srv.H.GetAllTests),
+		endpoint.OperationID("GetAllTests"),
 		endpoint.Response(http.StatusOK, []db.ApiTest{}, "successful operation"),
 	)
-	get := endpoint.New("get", "/tests/{Id}/results", "Find all results by test ID",
+	get := endpoint.New("get", "/tests/{id}/results", "Find all results by test ID",
 		endpoint.Handler(srv.H.GetTestResult),
+		endpoint.OperationID("GetTestResult"),
 		endpoint.Path("Id", "string", "ID of the test", true),
 		endpoint.Response(http.StatusOK, []db.ApiResult{}, "successful operation"),
+		endpoint.Response(http.StatusNotFound, "", "Test results not found"),
 	)
-	del := endpoint.New("delete", "/{Id}", "Delete test by ID",
+	del := endpoint.New("delete", "/tests/{id}", "Delete test by ID",
 		endpoint.Handler(srv.H.DeleteTest),
+		endpoint.OperationID("DeleteTest"),
 		endpoint.Description("Delete test and its results"),
 		endpoint.Path("Id", "string", "ID of the test", true),
 		endpoint.Response(http.StatusOK, db.ApiTest{}, "Successfully delted test"),
+		endpoint.Response(http.StatusNotFound, "", "Test not found"),
 	)
-	api := swag.New(swag.Endpoints(post, getall, get, del))
-
+	api := swag.New(swag.Description("API for the API monitor application to manage tests"), swag.Version("1.0.0"), swag.Title("API monitor"), swag.Endpoints(post, getall, get, del), swag.Host("http://localhost:8009/"), swag.ContactEmail("sfiso.dlaba@gmail.com"))
 	server.Server.ReadTimeout = time.Second * 5
 	server.Server.WriteTimeout = time.Second * 10
 	server.Use(mid.Logger())
@@ -90,5 +95,8 @@ func (srv *Server) Start() {
 	server.GET("/lib/*", echo.WrapHandler(assetHandler))
 	server.GET("/images/*", echo.WrapHandler(assetHandler))
 	server.GET("/swagger-ui.js", echo.WrapHandler(assetHandler))
+	server.GET("/health", func(c echo.Context) error {
+		return c.String(http.StatusOK, "I am alive")
+	})
 	logrus.Fatal(server.Start(srv.C.Port))
 }

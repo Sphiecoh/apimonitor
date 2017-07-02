@@ -1,4 +1,3 @@
-// @SubApi Test API [/]
 package api
 
 import (
@@ -40,23 +39,17 @@ func (h *Handler) CreateTest(c echo.Context) error {
 	}
 	h.S.Cron.Schedule(schedule, job)
 	logrus.Infof("New test created %s", newtest.Name)
-	return c.JSON(http.StatusCreated, nil)
+	return c.JSON(http.StatusCreated, newtest)
 }
 
-// @Title GetAllTests
-// @Description get all tests
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} []db.ApiTest
-// @Router / [get]
 func (h *Handler) GetAllTests(c echo.Context) error {
 
 	result, err := h.Store.GetAllTests()
 	if err != nil {
 		return err
 	}
-	c.JSON(200, result)
-	return nil
+	return c.JSON(200, result)
+
 }
 func (h *Handler) GetTestResult(c echo.Context) error {
 	id := c.Param("id")
@@ -64,8 +57,8 @@ func (h *Handler) GetTestResult(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	c.JSON(200, result)
-	return nil
+	return c.JSON(200, result)
+
 }
 func (h *Handler) DeleteTest(c echo.Context) error {
 	id := c.Param("id")
@@ -75,13 +68,11 @@ func (h *Handler) DeleteTest(c echo.Context) error {
 	}
 	eid := h.S.Entries[id]
 	h.S.Cron.Remove(eid)
-	c.JSON(200, nil)
-	return nil
+	return c.JSON(200, nil)
 
 }
 func Index(c echo.Context) error {
 
-	c.Redirect(301, "/web/html/layout.html")
-	return nil
+	return c.Redirect(301, "/web/html/layout.html")
 
 }
